@@ -9,11 +9,16 @@ request=`curl -s https://www.neberitrubku.ru/nomer-telefona/$number | grep "li c
 OLDIFS=$IFS
 IFS=";"
 fails=0
+goods=0
 for i in $request
 do
-  if [[ `echo $i | grep "трицательная"` ]]
+  if [[ `echo $i | grep "трицательн"` ]]
   then
     fails=$(($fails+`echo $i | cut -d"x" -f1`))
+  fi
+  if [[ `echo $i | grep "оложительн"` ]]
+  then
+    goods=$(($goods+`echo $i | cut -d"x" -f1`))
   fi
 done
 IFS=$OLDIFS
@@ -30,7 +35,7 @@ IFS=$OLDIFS
 #else
   chatid="444555666"
 #fi
-if [[ $fails > 0 ]]
+if [ $(( $fails - $goods )) -gt 0 ]
 then
   curl -s "https://api.telegram.org/$botid:$botkey/sendMessage?chat_id=$chatid&&parse_mode=html&text=Звонит номер <b>$number</b>.%0A<b>Определено как спам</b>.%0AОценки: $request.%0Ahttps://www.neberitrubku.ru/nomer-telefona/$number" 2>&1 1>/dev/null
   echo 1
