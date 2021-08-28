@@ -5,7 +5,7 @@ telegrammp3 - send voicemail to telegram chat.
 
 voicemail.conf format need look like this:
 
-[general]
+```[general]
 format=wav
 serveremail=asterisk@voice.local
 attach=yes
@@ -22,7 +22,7 @@ military=Zulu|'vm-received' q 'digits/at' H N 'hours' 'phonetic/z_p'
 european=Europe/Copenhagen|'vm-received' a d b 'digits/at' HM
 
 [voicemail]
-1 => $voicemail_password,homegroup,$tg_client_id,delete=yes
+1 => $voicemail_password,homegroup,$tg_client_id,delete=yes```
 
 spamn.sh - drop spam calls. Return 1 if spam or 0 if isn't spam
 
